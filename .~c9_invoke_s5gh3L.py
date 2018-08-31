@@ -2,8 +2,6 @@ import os
 from flask import Flask, request, render_template, redirect
 from pymongo import MongoClient
 
-
-
 MONGODB_URI = os.environ.get("MONGODB_URI")
 MONGODB_NAME = os.environ.get("MONGODB_NAME")
 
@@ -76,12 +74,6 @@ def load_documents(username):
         db = conn[MONGODB_NAME]
         list_obj = db[username].find()
         return [l for l in list_obj]
-
-
-
-
-
-
 
 
 if __name__ == '__main__':
