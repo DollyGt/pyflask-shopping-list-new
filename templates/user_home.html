@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script type="text/javascript" src="https://code.jquery.com/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.1.1/css/hover-min.css" type="text/css" />
+    <title>Document</title>
+    <link rel="stylesheet" href="../static/style.css" type="text/css" />
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="row ">
+                <div class="col-sm-6 user_info_left">
+                    <h1>User Details</h1>
+                    <a href="/">
+                        <p>logout</p>
+                    </a>
+                </div>
+                <div class="col-sm-6">
+                    <h1>{{username}}'s Shopping List</h1>
+                </div>
+            </div>
+        </div>
+     </header>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <form action="/{{username}}/create_new_list" method="POST">
+                        <input type="text" name="list_name" placeholder="Add a category eg clothes.." required="required" />
+                        <input type="submit" value="Add a List" />
+                    </form>
+                    </div>
+                    <div class="col-sm-6">
+                        {% if documents %} {% for document in documents %}
+                        <h3>{{document.name}} </h3>
+                        {% if document.list_items %} {% for item in document.list_items %}
+                        <div class="item">
+                            <p>{{item}}</p>
+                            <form action="/{{username}}/{{document.name}}/{{item}}/delete_item" method="POST">
+                                <input type="submit" value="Delete" />
+                            </form>
+                            <label>
+                  <input id="priority" name="priority" type="checkbox">
+                  <span class="lever"></span>
+                  Is Urgent
+                </label>
+                        </div>
+                        {% endfor %} {% else %}
+                        <p>You have no items!</p>
+                        {% endif %}
+
+                        <form method="POST" action="/{{username}}/{{document.name}}/add_item">
+                            <input type="text" name="list_item" required="required" />
+                            <input type="submit" value="Add An item" />
+                        </form>
+                        {% endfor %} {% else %}
+                        <p>You Need to Add a List</p>
+                        {% endif %}
+                        
+                    </div>
+                    </div>
+                </div>
+
+</body>
+
+</html>
